@@ -1,5 +1,11 @@
 <!-- header -->
 <%- include('partials/_header') %>
+<style>
+  #calendar {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+</style>
 <!-- partial:sidebar -->
 <%- include('partials/_sidebar') %>
 <!-- partial -->
@@ -10,7 +16,9 @@
   <div class="main-panel">
     <div class="content-wrapper">
 
-      <!-- page content -->
+      <div id='calendar'>
+
+      </div>
 
     </div>
     <!-- partial:footer -->
@@ -20,4 +28,51 @@
 
 </div>
 
+
 <%- include('partials/_footerbottom.ejs') %>
+
+<script src='assets/vendors/fullcalendar-6.1.11/dist/index.global.min.js'></script>
+<script src='assets/vendors/fullcalendar-6.1.11/packages/bootstrap5/index.global.min.js'></script>
+<script src='assets/vendors/fullcalendar-6.1.11/core/index.global.js'></script>
+<script src='assets/vendors/fullcalendar-6.1.11/core/locales-all.global.js'></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar')
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      themeSystem: 'bootstrap5',
+      locale: 'tr',
+      editable: true,
+      selectable: true,
+      buttonIcons: false,
+      select: function(info) {
+        alert('selected ' + info.startStr + ' to ' + info.endStr);
+      },
+      events: [{
+          title: 'All Day Event',
+          start: '2024-04-03'
+        },
+        {
+          title: 'Long Event',
+          start: '2024-04-07',
+          end: '2024-04-10'
+        },
+        {
+          groupId: 999,
+          title: 'Repeating Event',
+          start: '2024-04-09T16:00:00'
+        },
+        {
+          groupId: 999,
+          title: 'Repeating Event',
+          start: '2024-04-16T16:00:00'
+        },
+        {
+          title: 'Conference',
+          start: '2024-04-11',
+          end: '2024-04-13'
+        }
+      ]
+    })
+    calendar.render()
+  })
+</script>
