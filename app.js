@@ -4,7 +4,11 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const methodOverride = require('method-override');
 require('dotenv').config();
+const flash = require('connect-flash');
+
 const pageRouter = require('./routes/pageRoute');
+const authRouter = require('./routes/authRoute');
+const calendarRouter = require('./routes/calendarRoute');
 
 //DB Connection
 mongoose
@@ -17,6 +21,9 @@ const app = express();
 
 //Configration
 app.set('view engine', 'ejs');
+
+//GLOBAL VARIABLES
+global.User = null;
 
 //Middlewares
 app.use(express.static('public'));
@@ -31,9 +38,24 @@ app.use(
   })
 );
 app.use(methodOverride('_method', { methods: ['GET', 'POST'] }));
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.flashMessages = req.flash();
+  next();
+});
 
 //Routes
+app.use('*', (req, res, next) => {
+  User = req.session.user;
+  next();
+});
 app.use('/', pageRouter);
+app.use('/auth', authRouter);
+app.use('/calendar', calendarRouter);
+
+app.use((req, res) => {
+  res.status(404).render('404');
+});
 
 //Listen
 const port = process.env.PORT ?? 5000;

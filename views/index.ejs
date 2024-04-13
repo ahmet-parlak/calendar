@@ -1,11 +1,5 @@
 <!-- header -->
 <%- include('partials/_header') %>
-<style>
-  #calendar {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-</style>
 <!-- partial:sidebar -->
 <%- include('partials/_sidebar') %>
 <!-- partial -->
@@ -19,60 +13,98 @@
       <div id='calendar'>
 
       </div>
+      <!-- Create Event Modal -->
+      <div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form id="createEventForm" class="forms-sample">
+              <div class="modal-header">
+                <h5 class="modal-title" id="createEventLabel">Create Event</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="form-group col-sm-6">
+                    <label for="createEventStart">Start</label>
+                    <input type="text" class="form-control" id="createEventStart" disabled>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <label for="createEventEnd">End</label>
+                    <input type="text" class="form-control" id="createEventEnd" disabled>
+                  </div>
+                </div>
+                <div class="form-group mt-2">
+                  <label for="createEventTitle">Event Title</label>
+                  <input type="text" class="form-control" id="createEventTitle" placeholder="Event Title" required>
+                </div>
+                <div class="form-group mt-4">
+                  <label for="createEventDescription">Event Description</label>
+                  <textarea class="form-control" id="createEventDescription" placeholder="Event Description"></textarea>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Add Event</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Show Event Modal -->
+      <div class="modal fade" id="showEventModal" tabindex="-1" aria-labelledby="showEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form id="editEventForm" class="forms-sample">
+              <div class="modal-header">
+                <h5 class="modal-title" id="showEventModalLabel">Edit Event</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="form-group col-sm-6">
+                    <label for="editEventStart">Start</label>
+                    <input type="text" class="form-control" id="editEventStart">
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <label for="editEventEnd">End</label>
+                    <input type="text" class="form-control" id="editEventEnd">
+                  </div>
+                </div>
+                <div class="form-group mt-2">
+                  <label for="editEventTitle">Event Title</label>
+                  <input type="text" class="form-control" id="editEventTitle" placeholder="Event Title" required>
+                </div>
+                <div class="form-group mt-4">
+                  <label for="editEventDescription">Event Description</label>
+                  <textarea class="form-control" name="eventDescription" id="editEventDescription" placeholder="Event Description"></textarea>
+                </div>
+
+              </div>
+              <div class="modal-footer d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Update Event</button>
+                <div id="deleteEventBtn" class="btn delete-event p-0 m-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Event"><i class="mdi mdi-delete icon-md m-0"></i></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
 
     </div>
     <!-- partial:footer -->
     <%- include('partials/_footer') %>
     <!-- partial -->
   </div>
-
 </div>
+
 
 
 <%- include('partials/_footerbottom.ejs') %>
 
 <script src='assets/vendors/fullcalendar-6.1.11/dist/index.global.min.js'></script>
 <script src='assets/vendors/fullcalendar-6.1.11/packages/bootstrap5/index.global.min.js'></script>
-<script src='assets/vendors/fullcalendar-6.1.11/core/index.global.js'></script>
-<script src='assets/vendors/fullcalendar-6.1.11/core/locales-all.global.js'></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const calendarEl = document.getElementById('calendar')
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      themeSystem: 'bootstrap5',
-      locale: 'tr',
-      editable: true,
-      selectable: true,
-      buttonIcons: false,
-      select: function(info) {
-        alert('selected ' + info.startStr + ' to ' + info.endStr);
-      },
-      events: [{
-          title: 'All Day Event',
-          start: '2024-04-03'
-        },
-        {
-          title: 'Long Event',
-          start: '2024-04-07',
-          end: '2024-04-10'
-        },
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2024-04-09T16:00:00'
-        },
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2024-04-16T16:00:00'
-        },
-        {
-          title: 'Conference',
-          start: '2024-04-11',
-          end: '2024-04-13'
-        }
-      ]
-    })
-    calendar.render()
-  })
-</script>
+<!-- <script src='assets/vendors/fullcalendar-6.1.11/packages/core/index.global.js'></script> -->
+<script src='assets/vendors/fullcalendar-6.1.11/packages/core/locales-all.global.js'></script>
+<!-- app.js -->
+<script src="assets/js/app.js"></script>

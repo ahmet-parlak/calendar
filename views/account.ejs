@@ -1,0 +1,169 @@
+<!-- header -->
+<%- include('partials/_header') %>
+<!-- partial:sidebar -->
+<%- include('partials/_sidebar') %>
+<!-- partial -->
+<div class="container-fluid page-body-wrapper">
+
+  <!-- partial:navbar -->
+  <%- include('partials/_navbar') %>
+  <!-- partial -->
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="d-flex justify-content-center">
+        <div class="col-md-6 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">Account</h3>
+
+              <div class="account-inf mt-4 mb-5">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Username</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0"><%= User.username %></p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Email</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0"><%= User.email %></p>
+                  </div>
+                </div>
+                <hr>
+              </div>
+
+              <h4>Change Password</h4>
+              <hr>
+              <div class="d-flex justify-content-center">
+                <form class="forms-sample mt-4 col-8" id="changePasswordForm" method="post" action="/auth/change-password">
+                  <div class="form-group">
+                    <label for="current_password">Current Password</label>
+                    <input type="password" class="form-control" id="current_password" name="current_password" placeholder="Password" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="password">New Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="confirm_password">Confirm New Password</label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Password" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary me-2">Submit</button>
+                </form>
+              </div>
+              <div class="d-flex justify-content-center d-none" id="alertArea">
+                <div class="validation-alerts mt-4 col-8">
+                  <div class="alert alert-danger d-flex align-items-center" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                      <use xlink:href="#exclamation-triangle-fill" />
+                    </svg>
+                    <div>
+                      <div class="validation-error-messages px-1" id="validationErrorMessages">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- partial:footer -->
+    <%- include('partials/_footer') %>
+    <!-- partial -->
+  </div>
+</div>
+
+
+
+<%- include('partials/_footerbottom.ejs') %>
+
+<script>
+  const changePasswordForm = document.getElementById("changePasswordForm");
+
+  changePasswordForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const currentPasswordInput = document.getElementById("current_password");
+    const newPasswordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirm_password");
+
+    const currentPassword = document.getElementById("current_password").value;
+    const newPassword = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm_password").value;
+
+    const url = changePasswordForm.getAttribute("action");
+
+    const postData = {
+      current_password: currentPassword,
+      password: newPassword,
+      confirm_password: confirmPassword
+    };
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+      })
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+
+        if (response.status == "success") {
+          document.getElementById('alertArea').classList.add('d-none');
+          currentPasswordInput.value = ""
+          newPasswordInput.value = ""
+          confirmPasswordInput.value = ""
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Password Changed!",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          document.activeElement.blur();
+          return;
+        }
+
+        if (response?.error_messages ?? false) {
+          const alertAreaDiv = document.getElementById('alertArea');
+          const validationErrorMessagesDiv = document.getElementById('validationErrorMessages');
+          validationErrorMessagesDiv.innerHTML = "";
+          response.error_messages.forEach(msg => {
+            validationErrorMessagesDiv.innerHTML += ('<div class="mb-1" >' + msg + "</div>")
+          });
+          alertAreaDiv.classList.remove('d-none');
+          return;
+        }
+
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "An error has occurred!",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      })
+      .catch(error => {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Somethings are wrong!",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        console.error('An error has occurred:', error);
+      });
+
+  })
+</script>

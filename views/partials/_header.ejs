@@ -1,26 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Corona Admin</title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="assets/vendors/jvectormap/jquery-jvectormap.css">
-    <link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css">
-    <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.theme.default.min.css">
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
-    <!-- Layout styles -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <!-- End layout styles -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
-  </head>
-  <body>
-    <div class="container-scroller">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Corona Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="assets/vendors/jvectormap/jquery-jvectormap.css">
+  <link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css">
+  <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.carousel.min.css">
+  <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.theme.default.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <!-- endinject -->
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- End layout styles -->
+  <!-- SweetAlert2 -->
+  <link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css
+" rel="stylesheet">
+  <link rel="shortcut icon" href="assets/images/favicon.png" />
+
+
+  <style>
+    input:focus,
+    textarea:focus {
+      color: rgb(183, 186, 187) !important;
+      border-color: #0090e7 !important;
+    }
+
+    input[disabled] {
+      background-color: #191c24 !important;
+    }
+
+    .btn.delete-event:hover {
+      color: rgb(179, 19, 19);
+    }
+
+    .btn-close {
+      background-color: #30373f;
+    }
+
+    /* calendar */
+    #calendar {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .fc-prev-button,
+    .fc-next-button,
+    .fc-today-button {
+      background-color: #0090e7 !important;
+    }
+
+    .fc-event {
+      cursor: pointer;
+    }
+
+    /* sweetalert2 bg */
+    .swal2-popup {
+      background-color: #080808;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">

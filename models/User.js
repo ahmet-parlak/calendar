@@ -7,6 +7,7 @@ const UserSchema = new Schema({
   username: { type: String, required: true, unique: true, trim: true },
   email: { type: String, required: true, unique: true, trim: true },
   password: { type: String, reqired: true },
+  googleToken: { type: Object },
   created_at: { type: Date, default: Date.now },
 });
 
